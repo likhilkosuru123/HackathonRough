@@ -8,10 +8,14 @@ import io.cucumber.junit.*;
 		features= {".//FeaturesFile/bikes.feature"},
 		
 		glue="stepDefinition",
-		plugin= {"pretty", "html:reports/myreport.html", 
+		plugin= {"pretty", "html:cucumberReports/myreport.html", 
 				  "rerun:target/rerun.txt",
 				  "com.aventstack.extentreports.cucumber.adapter.ExtentCucumberAdapter:"
-				})
+				},
+		dryRun = false,
+		monochrome = true,
+		publish=true
+		)
 public class testRun {
 
 }

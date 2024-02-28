@@ -26,8 +26,15 @@ public class upcomingBikesPage extends  BasePage {
 	@FindBy(className="bc-cl")
 	public WebElement title;
 	
-	@FindBy(xpath="//tr[@class='ml-15 ']") 
+	@FindBy(xpath="//tr[@class='ml-15 ']/td[1]") 
 	List<WebElement> upcoming_Bikes_List;
+	
+	@FindBy(xpath="//tr[@class='ml-15 ']/td[2]") 
+	List<WebElement> upcoming_Bikes_Cost;
+	
+	@FindBy(xpath="//tr[@class='ml-15 ']/td[3]") 
+	List<WebElement> upcoming_Bikes_Months;
+	
 	
 	@FindBy(xpath="//a[@class='c-p'][normalize-space()='Used Cars']")
 	WebElement used_Cars_Hover;
@@ -44,9 +51,16 @@ public class upcomingBikesPage extends  BasePage {
 		read_More.click();
 	}
 	
-	public void upcomingBikesList() {
-		
+	public List<WebElement> upcomingBikesList() {
+		return upcoming_Bikes_List;
 	}
+	public List<WebElement> upcomingBikesPrice() {
+		return upcoming_Bikes_Cost;
+	}
+	public List<WebElement> upcomingBikesMonths() {
+		return upcoming_Bikes_Months;
+	}
+	
 	public String titleOfNewBikes() {
 		return title.getText();
 	}

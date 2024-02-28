@@ -8,13 +8,13 @@
     <parameter name="browser" value="chrome"/>
     <parameter name="url" value="https://www.zigwheels.com/"/>
     <classes>
-      <class name="testCases.TC01_identifyingNewBikes">
+      <class name="testCases.TC02_usedCars">
         <methods>
           <include name="tearDown"/>
+          <include name="usedCars"/>
           <include name="setup"/>
-          <include name="googleLogin"/>
         </methods>
-      </class> <!-- testCases.TC01_identifyingNewBikes -->
+      </class> <!-- testCases.TC02_usedCars -->
     </classes>
   </test> <!-- Chrome Test(failed) -->
 </suite> <!-- Failed suite [Suite] -->

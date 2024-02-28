@@ -2,21 +2,35 @@ package testCases;
 
 
 
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Set;
 
+import org.openqa.selenium.JavascriptExecutor;
+import org.openqa.selenium.WebElement;
 import org.testng.Assert;
 import org.testng.annotations.*;
 
 import pageObject.*;
 import testBase.BaseClass;
+import utilities.ExcelUtility;
 
 public class TC01_identifyingNewBikes extends BaseClass {
 //	public WebDriver driver;
+	List<WebElement> totalBikesList;
+	List<WebElement> totalBikesCost;
+	List<WebElement> totalBikesMonth;
 	
+	public static List<String> filteredBikesList = new ArrayList<String>();
+	
+	public static List<String> fileteredBikesCost = new ArrayList<String>();
+	public static List<String> filteredBikesMonth = new ArrayList<String>();
+	public static List<Integer>index;
 	BasePage nb;
 	upcomingBikesPage ubp;
 	usedCars uc;
-	login lg;
+	
 	
 	
 	@Test(priority=1)
@@ -34,47 +48,51 @@ public class TC01_identifyingNewBikes extends BaseClass {
 		
 	}
 	@Test(priority=2)
-	public void manufacturur() {
+	public void manufacturer() throws InterruptedException {
 		
 		ubp.selectManufacturer();
+		
 		ubp.readMore();
-		ubp.upcomingBikesList();
-		System.out.println("method 2 passed");
+		JavascriptExecutor js = (JavascriptExecutor)driver;
+		js.executeScript("window.scrollBy(0,400)");
+		Thread.sleep(3000);
+		js.executeScript("window.scrollBy(0,-400)");
+		totalBikesList = ubp.upcomingBikesList();
+		totalBikesCost = ubp.upcomingBikesPrice();
+		totalBikesMonth = ubp.upcomingBikesMonths();
+		index=new ArrayList<Integer>();
+		int size=totalBikesCost.size();
 		
-	}
-	@Test(priority=3)
-	public void usedCars() {
-		ubp.usedCarsHover();
-		ubp.chennaiCars();
-		uc = new usedCars(driver);
-		System.out.println("method 3 passed");
-		System.out.println(uc.titleOfUsedCars());
-		Assert.assertEquals(uc.titleOfUsedCars(), "Used Cars in Chennai");
-	}
-	@Test(priority=4)
-	public void modelNames() {
-		uc.popularModels();
-		uc.returnToHomePage();
-		System.out.println("method 4 passed");
-		
-		
-	}
-	@Test(priority=5)
-	public void googleLogin() throws InterruptedException {
-		lg=new login(driver);
-		lg.loginSignUp();
-		lg.google();
-		Set<String> winodws = driver.getWindowHandles();
-		for(String s:winodws) {
-			if(s.equals(driver.getWindowHandle())) {
+		for(int i=0; i<size;i++)
+		{
+			String value= totalBikesCost.get(i).getText().replaceAll("[^0-9]","");
+			
+			if(Integer.parseInt(value)*1000<400000 && (!totalBikesCost.get(i).getText().contains("crore")))
+			{
 				
-			}else {
-					driver.switchTo().window(s);
+		        index.add(i);
 			}
+			else if(!totalBikesCost.get(i).getText().contains("Lakh")) {
+				index.add(i);
+			}
+			
 		}
-		lg.email("abc@gmail.com");
-		System.out.println(lg.errorMessage());
-		System.out.println("method 5 passed");
+		filteredBikesList.add("Upcoming Bikes Model");
+		fileteredBikesCost.add("Expected Price");
+		filteredBikesMonth.add("Expected Launch Date");
+		for(Integer i:index) {
+				String bikes = totalBikesList.get(i).getText();
+				filteredBikesList.add(bikes);
+				
+				String cost = totalBikesCost.get(i).getText();
+				fileteredBikesCost.add(cost);
+				
+				String month = totalBikesMonth.get(i).getText();
+				filteredBikesMonth.add(month);
+		}
 		
 	}
+	
+	
+	
 }

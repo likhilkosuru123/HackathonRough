@@ -9,6 +9,8 @@
 			<parameter name="url"  value="https://www.zigwheels.com/"></parameter> 
 				<classes>
     				<class name="testCases.TC01_identifyingNewBikes"/>
+    				<class name="testCases.TC02_usedCars"/>
+    				<class name="testCases.TC03_login"/>
     			</classes>
 		</test>
 </suite> <!-- Suite -->
